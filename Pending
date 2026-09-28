@@ -1,0 +1,21 @@
+# Recommended build order
+
+Don't try to make all five files "real" at once. Build incrementally:
+
+**First build:** Placeholder index.mjs (serves a simple HTML page), placeholder
+siddh_gateway.py (no-op loop), placeholder go2rtc.yaml (empty streams), zero-byte
+ONNX. Boot it. Confirm Openbox + Chromium + installer work.
+
+**Second build:** Real index.mjs (even a minimal one). Confirm the kiosk shows
+your page.
+
+**Third build:** Real go2rtc.yaml (with one camera). Confirm the stream appears
+in go2rtc's WebUI at http://localhost:1984.
+
+**Fourth build:** Real siddh_gateway.py + real gateway.toml. Confirm Modbus
+readings appear in the SQLite DB.
+
+**Fifth build:** Real ONNX model. Confirm AI inference runs.
+
+Each build takes minutes, not hours. This incremental approach catches problems
+early, before they're buried under other changes.
