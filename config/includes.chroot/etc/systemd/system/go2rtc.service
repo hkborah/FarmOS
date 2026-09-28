@@ -1,0 +1,14 @@
+[Unit]
+Description=go2rtc camera WebRTC/RTSP gateway
+After=network.target
+
+[Service]
+Type=simple
+User=siddh
+Group=siddh
+ExecStart=/usr/local/bin/go2rtc -config /opt/siddh/go2rtc.yaml
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

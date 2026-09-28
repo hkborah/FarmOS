@@ -1,0 +1,2 @@
+# Persistent symlink for the CH341 USB-to-RS485 dongle
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="siddh_sensors"

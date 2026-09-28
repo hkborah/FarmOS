@@ -1,0 +1,50 @@
+# FarmOS Gateway Configuration
+# Adjust these values to match your actual farm hardware and central server.
+
+[server]
+# Central Siddh server that receives telemetry batches
+url = "https://your-central-server.example.com/api/ingest"
+# Ingest token issued by the central server
+token = "REPLACE_WITH_REAL_TOKEN"
+# How often to sync (seconds)
+sync_interval = 300
+
+[modbus]
+# Serial device — uses the udev symlink, never the raw ttyUSB name
+device = "/dev/siddh_sensors"
+baudrate = 9600
+bytesize = 8
+parity = "N"
+stopbits = 1
+timeout = 1
+retries = 3
+
+# Sensor register mappings — one section per Modbus slave
+[sensors.main_shed]
+slave_id = 1
+poll_interval = 30
+registers = [
+  { name = "temperature", address = 0, type = "holding", scale = 0.1, unit = "°C" },
+  { name = "humidity",    address = 1, type = "holding", scale = 0.1, unit = "%" },
+  { name = "ammonia",     address = 2, type = "holding", scale = 0.01, unit = "ppm" },
+]
+
+[sensors.fan_controller]
+slave_id = 2
+poll_interval = 60
+registers = [
+  { name = "fan_speed",   address = 0, type = "holding", scale = 1, unit = "rpm" },
+  { name = "status",      address = 1, type = "coil",    scale = 1, unit = "" },
+]
+
+[ai]
+model_path = "/opt/siddh/models/yolov8n.onnx"
+confidence_threshold = 0.45
+iou_threshold = 0.5
+# Camera to use for bird counting
+camera_url = "rtsp://localhost:8554/main_shed"
+
+[database]
+path = "/var/lib/siddh/telemetry.db"
+# Keep 6 months of readings during internet outages
+retention_days = 180

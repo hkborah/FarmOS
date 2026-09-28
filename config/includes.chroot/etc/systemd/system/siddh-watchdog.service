@@ -1,0 +1,15 @@
+[Unit]
+Description=Siddh farm kiosk watchdog
+After=siddh-app.service
+After=nodm.service
+Wants=siddh-app.service
+ConditionPathExists=/usr/local/bin/siddh-watchdog.sh
+
+[Service]
+Type=simple
+ExecStart=/bin/sh /usr/local/bin/siddh-watchdog.sh
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

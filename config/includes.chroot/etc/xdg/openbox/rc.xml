@@ -1,0 +1,10 @@
+<theme>
+  <name>Clearlooks</name>
+  <titleLayout>NLIMC</titleLayout>
+</theme>
+<desktops>
+  <number>1</number>
+  <names>
+    <name>Farm</name>
+  </names>
+</desktops>

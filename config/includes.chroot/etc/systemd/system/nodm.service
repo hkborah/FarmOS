@@ -1,0 +1,21 @@
+[Unit]
+Description=Siddh farm kiosk display manager (nodm autologin)
+Documentation=man:nodm(1)
+After=systemd-user-sessions.service
+After=siddh-app.service
+Wants=siddh-app.service
+
+[Service]
+Type=simple
+Environment=NODM_USER=siddh
+Environment=NODM_XSESSION=/usr/bin/openbox-session
+Environment="NODM_X_OPTIONS=-nolisten tcp"
+Environment=NODM_FIRST_VT=7
+Environment=NODM_MIN_SESSION_TIME=60
+Environment=NODM_X_TIMEOUT=300
+ExecStart=/usr/sbin/nodm
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=graphical.target

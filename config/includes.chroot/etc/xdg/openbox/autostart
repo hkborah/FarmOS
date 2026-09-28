@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Set the wall wallpaper
+feh --bg-fill /usr/share/backgrounds/farmos/farm-wallpaper-1920x1080.jpg &
+
+# Hide the mouse cursor when idle (wall kiosk)
+unclutter -idle 2 -root &
+
+# Bottom taskbar / start menu
+lxpanel &
+
+# System tray volume icon
+volumeicon-alsa &
+
+# Screen blanking control (DPMS off after 10 min, wake on input)
+xset s 600 600 &
+xset dpms 600 600 600 &
+
+# Launch the farm kiosk browser (borderless app window)
+chromium \
+  --start-maximized \
+  --app=http://localhost:3000/kiosk \
+  --noerrdialogs \
+  --disable-infobars \
+  --disable-translate \
+  --enable-features=VaapiVideoDecoder \
+  --ozone-platform=x11 &
+
+# Optional: start VLC minimized for background music playback
+# vlc --intf dummy --play-and-exit /opt/siddh/media/playlist.m3u &

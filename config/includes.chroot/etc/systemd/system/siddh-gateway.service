@@ -1,0 +1,16 @@
+[Unit]
+Description=Siddh Modbus gateway + AI sensor pipeline
+After=network.target siddh-app.service
+Wants=siddh-app.service
+
+[Service]
+Type=simple
+User=siddh
+Group=siddh
+WorkingDirectory=/opt/siddh
+ExecStart=/opt/siddh/venv/bin/python /opt/siddh/siddh_gateway.py
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

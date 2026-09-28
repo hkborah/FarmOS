@@ -1,0 +1,4 @@
+# Placeholder go2rtc config — no cameras yet
+streams: {}
+api:
+  listen: "127.0.0.1:1984"

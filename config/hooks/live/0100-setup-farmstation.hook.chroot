@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+# Create the siddh system user
+id -u siddh >/dev/null 2>&1 || \
+  useradd -r -m -d /opt/siddh -s /usr/sbin/nologin siddh
+
+# Data directory for the SQLite buffer
+mkdir -p /var/lib/siddh
+chown siddh:siddh /var/lib/siddh
+
+# Fix watchdog script permissions
+[ -f /usr/local/bin/siddh-watchdog.sh ] && \
+  chmod 0755 /usr/local/bin/siddh-watchdog.sh
+
+# Enable services
+systemctl enable nodm.service
+systemctl enable siddh-app.service
+systemctl enable siddh-gateway.service
+systemctl enable go2rtc.service
+
+# Python AI + sensor venv
+python3 -m venv /opt/siddh/venv
+/opt/siddh/venv/bin/pip install --no-cache-dir \
+  pymodbus==3.6.9 \
+  pyserial==3.5 \
+  requests==2.32.3 \
+  opencv-python-headless \
+  onnxruntime \
+  onvif-zeep \
+  numpy
+
+# go2rtc static binary
+curl -L -o /usr/local/bin/go2rtc \
+  https://github.com/AlexxIT/go2rtc/releases/latest/download/go2rtc_linux_amd64
+chmod 0755 /usr/local/bin/go2rtc
+
+chown -R siddh:siddh /opt/siddh

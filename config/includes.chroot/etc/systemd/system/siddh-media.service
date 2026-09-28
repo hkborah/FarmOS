@@ -1,0 +1,17 @@
+[Unit]
+Description=Siddh background audio playlist
+After=network.target
+After=sound.target
+ConditionPathExists=/usr/bin/vlc
+ConditionPathExists=/opt/siddh/media/playlist.m3u
+
+[Service]
+Type=simple
+User=siddh
+Environment=HOME=/home/siddh
+ExecStart=/usr/bin/vlc --intf dummy --loop --no-video /opt/siddh/media/playlist.m3u
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Siddh local Node.js server
+After=network.target
+
+[Service]
+Type=simple
+User=siddh
+WorkingDirectory=/opt/siddh/siddh-app
+ExecStart=/usr/bin/node /opt/siddh/siddh-app/.output/server/index.mjs
+Restart=always
+RestartSec=5s
+Environment=NODE_ENV=production
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target
